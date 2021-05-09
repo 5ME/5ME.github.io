@@ -1,6 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Spring AOP (1)</title>
+    <url>/2021/05/07/Spring-AOP-(1)/</url>
+    <content><![CDATA[<blockquote><p>在软件开发中，散布于应用中多处的功能被称为<strong>横切关注点</strong>（crosscutting concern）。通常来讲，这些横切关注点从概念上是与应用的业务逻辑相分离的（但是往往会直接嵌入到应用的业务逻辑之中）。把这些横切关注点与业务逻辑相分离正是<strong>面向切面编程</strong>（AOP）所要解决的问题。</p>
+<footer><strong>Craig Walls</strong><cite>Spring 实战（第4版）</cite></footer></blockquote>
+
+<span id="more"></span>
+
+<h2 id="AOP-概述"><a href="#AOP-概述" class="headerlink" title="AOP 概述"></a>AOP 概述</h2><p>AOP，Aspect Oriented Programming，面向切面编程</p>
+<ul>
+<li>AOP 是一种新的方法论，是对传统 OOP 的补充。</li>
+<li>AOP 操作的主要对象是切面（aspect），切面是模块化后的横切关注点。</li>
+<li>在应用 AOP 编程时，仍然需要定义公共功能，但可以明确地定义这个功能应用在哪里，以什么方式应用，并且不必修改受影响的类。</li>
+<li>AOP 的好处：<ul>
+<li>关注点集中，代码不分散，便于维护和升级</li>
+<li>业务模块更简洁，只包含核心业务代码，降低耦合</li>
+</ul>
+</li>
+<li>常见应用场景：日志、声明式事务、安全和缓存等</li>
+</ul>
+<h2 id="AOP-术语"><a href="#AOP-术语" class="headerlink" title="AOP 术语"></a>AOP 术语</h2><p><img data-src="https://gitee.com/ME_WE/my-picture-repository/raw/master/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/AOP%E6%9C%AF%E8%AF%AD.png" alt="AOP术语"></p>
+<h3 id="通知-Advice"><a href="#通知-Advice" class="headerlink" title="通知 Advice"></a>通知 Advice</h3><p>切面的工作称为通知，它定义了切面是什么（what）以及何时（when）使用。</p>
+<p>Spring AOP 中的五种通知：</p>
+<ul>
+<li>前置通知（Before）：在目标方法被调用之前调用通知。</li>
+<li>后置通知（After）：在目标方法完成之后调用通知。无论是正常返回还是抛出异常，后置通知都会执行。</li>
+<li>返回通知（After-Returning）：在目标方法<strong>成功执行</strong>之后调用通知。</li>
+<li>异常通知（After-Throwing）：在目标方法抛出异常后调用通知。</li>
+<li>环绕通知（Around）：在目标方法调用之前和调用之后执行自定义的行为。</li>
+</ul>
+<h3 id="连接点-Join-point"><a href="#连接点-Join-point" class="headerlink" title="连接点 Join point"></a>连接点 Join point</h3><p>可以应用切面的点称为连接点，可以是调用某个方法时、某个方法异常时等等。</p>
+<p>例如在上面的图片中，所有圆点都是连接点。</p>
+<h3 id="切点-Pointcut"><a href="#切点-Pointcut" class="headerlink" title="切点 Pointcut"></a>切点 Pointcut</h3><p>真正应用切面的点称为切点，切点定义了在何处（where）应用切面。</p>
+<p>并不需要在每个连接点都应用切面，只需要根据实际需求选择连接点进行切入，这些连接点就是切点。</p>
+<h3 id="切面-Aspect"><a href="#切面-Aspect" class="headerlink" title="切面 Aspect"></a>切面 Aspect</h3><p>切面是通知和切点的结合。通知和切点共同定义了切面的全部内容——它是什么，在何时和何处完成其功能。 </p>
+<h3 id="织入-Weaving"><a href="#织入-Weaving" class="headerlink" title="织入 Weaving"></a>织入 Weaving</h3><p>把切面应用到目标对象并创建新的代理对象的过程称为织入。</p>
+<p>可以在目标对象生命周期的不同阶段进行织入：</p>
+<ul>
+<li>编译期：切面在目标类编译时被织入。</li>
+<li>类加载期：切面在目标类加载到 JVM 时被织入。</li>
+<li>运行期：切面在应用运行的某个时刻被织入，AOP 容器为目标容器动态地创建一个代理对象。<strong>Spring AOP 采用的就是这种方式</strong>。</li>
+</ul>
+<h2 id="Spring-AOP-运行的大致流程"><a href="#Spring-AOP-运行的大致流程" class="headerlink" title="Spring AOP 运行的大致流程"></a>Spring AOP 运行的大致流程</h2><h3 id="底层原理"><a href="#底层原理" class="headerlink" title="底层原理"></a>底层原理</h3><p>Spring AOP 构建在<strong>动态代理</strong>基础之上，因此 Spring 对 AOP 的支持<strong>局限于方法拦截</strong>。</p>
+<p>Spring AOP 底层使用<strong>动态代理</strong>。有两种情况：</p>
+<ul>
+<li><p>有接口，使用 JDK 动态代理</p>
+<p>创建接口实现类代理对象，增强类的方法</p>
+<p><img data-src="https://gitee.com/ME_WE/my-picture-repository/raw/master/Spring%205%20%E7%AC%94%E8%AE%B0%E6%8F%92%E5%9B%BE/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86.png" alt="JDK动态代理"></p>
+</li>
+<li><p>没有接口，使用 CGLIB 动态代理</p>
+<p>创建子类的代理对象，增强类的方法</p>
+<p><img data-src="https://gitee.com/ME_WE/my-picture-repository/raw/master/Spring%205%20%E7%AC%94%E8%AE%B0%E6%8F%92%E5%9B%BE/CGLIB%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86.png" alt="CGLIB动态代理"></p>
+</li>
+</ul>
+<h3 id="JDK-动态代理"><a href="#JDK-动态代理" class="headerlink" title="JDK 动态代理"></a>JDK 动态代理</h3><p>使用 JDK 动态代理，使用 <code>java.lang.reflect.Proxy</code> 类里面的方法创建代理对象</p>
+<p><img data-src="https://gitee.com/ME_WE/my-picture-repository/raw/master/Spring%205%20%E7%AC%94%E8%AE%B0%E6%8F%92%E5%9B%BE/newProxyInstance%E6%96%B9%E6%B3%95.png" alt="newProxyInstance方法"></p>
+<p><img data-src="https://gitee.com/ME_WE/my-picture-repository/raw/master/Spring%205%20%E7%AC%94%E8%AE%B0%E6%8F%92%E5%9B%BE/newProxyInstance%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0.png" alt="newProxyInstance方法参数"></p>
+<p>代码演示：</p>
+<ol>
+<li><p>创建接口，定义方法</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UserDao</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token class-name">String</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token class-name">String</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>创建接口实现类，实现方法</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserDaoImpl</span> <span class="token keyword">implements</span> <span class="token class-name">UserDao</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"add 方法执行"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token class-name">String</span> id<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"update 方法执行"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> id<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>使用 <code>java.lang.reflect.Proxy</code> 类创建接口代理对象</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JdkProxy</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 创建接口实现类代理对象</span>
+        <span class="token class-name">Class</span><span class="token punctuation">[</span><span class="token punctuation">]</span> interfaces <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token class-name">UserDao</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+        <span class="token class-name">UserDao</span> userDao <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UserDaoImpl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 被代理对象</span>
+        <span class="token class-name">UserDao</span> proxyInstance <span class="token operator">=</span>
+                <span class="token punctuation">(</span><span class="token class-name">UserDao</span><span class="token punctuation">)</span> <span class="token class-name">Proxy</span><span class="token punctuation">.</span><span class="token function">newProxyInstance</span><span class="token punctuation">(</span><span class="token class-name">JdkProxy</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                        interfaces<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">UserDaoProxy</span><span class="token punctuation">(</span>userDao<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>proxyInstance<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>proxyInstance<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token string">"abc"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 创建代理对象代码</span>
+<span class="token keyword">class</span> <span class="token class-name">UserDaoProxy</span> <span class="token keyword">implements</span> <span class="token class-name">InvocationHandler</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token class-name">Object</span> obj<span class="token punctuation">;</span>
+
+    <span class="token comment">// 把被代理对象传递过来</span>
+    <span class="token keyword">public</span> <span class="token class-name">UserDaoProxy</span><span class="token punctuation">(</span><span class="token class-name">Object</span> obj<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>obj <span class="token operator">=</span> obj<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 增强的逻辑</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Object</span> proxy<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 方法之前</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>method<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" 方法之前执行，参数："</span> <span class="token operator">+</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 被增强的方法执行</span>
+        <span class="token class-name">Object</span> returnValue <span class="token operator">=</span> method<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 方法之后</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>method<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" 方法之后执行"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> returnValue<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li><p>输出：</p>
+<pre class="line-numbers language-none"><code class="language-none">add 方法之前执行，参数：[2, 3]
+add 方法执行
+add 方法之后执行
+5
+update 方法之前执行，参数：[abc]
+update 方法执行
+update 方法之后执行
+abc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<p>上面代码中的 <code>java.lang.reflect.InvocationHandler</code> 接口及其 <code>invoke</code> 方法：</p>
+<p><img data-src="https://gitee.com/ME_WE/my-picture-repository/raw/master/Spring%205%20%E7%AC%94%E8%AE%B0%E6%8F%92%E5%9B%BE/InvocationHandler%E6%8E%A5%E5%8F%A3.png" alt="InvocationHandler接口"></p>
+<p><img data-src="https://gitee.com/ME_WE/my-picture-repository/raw/master/Spring%205%20%E7%AC%94%E8%AE%B0%E6%8F%92%E5%9B%BE/InvocationHandler.invoke%E6%96%B9%E6%B3%95.png" alt="InvocationHandler.invoke方法.png"></p>
+<h3 id="大致流程"><a href="#大致流程" class="headerlink" title="大致流程"></a>大致流程</h3><p><img data-src="https://gitee.com/ME_WE/my-picture-repository/raw/master/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/SpringAOP%E8%BF%90%E8%A1%8C%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="Spring AOP 运行示意图"></p>
+<p>通过在代理类中包裹切面，Spring 在运行期把切面织入到 Spring 管理的 bean 中。如上图所示，代理类封装了目标类，并拦截被通知方法的调用，再把调用转发给真正的目标 bean。当代理拦截到方法调用时，在调用目标 bean 方法之前，会执行切面逻辑。</p>
+<hr>
+<p>参考资料：</p>
+<p>Craig Walls - Spring 实战（第 4 版）</p>
+]]></content>
+      <tags>
+        <tag>Spring</tag>
+        <tag>AOP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring Boot 整合 MyBatis</title>
     <url>/2021/01/10/Spring-Boot-%E6%95%B4%E5%90%88-MyBatis/</url>
     <content><![CDATA[<h2 id="创建-Spring-Boot-项目"><a href="#创建-Spring-Boot-项目" class="headerlink" title="创建 Spring Boot 项目"></a>创建 Spring Boot 项目</h2><p>利用 IDEA 内置的 Spring Initializr 创建项目，根据需要选择相应的模块，这里已经内置了 <code>MyBatis Framework</code> 选项。</p>
@@ -245,6 +383,187 @@
       </tags>
   </entry>
   <entry>
+    <title>二分查找</title>
+    <url>/2020/07/17/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</url>
+    <content><![CDATA[<p><img data-src="https://s1.ax1x.com/2020/07/17/Us1nsS.png" alt="二分查找"></p>
+<blockquote>
+<p>注：图源 <a href="https://leetcode-cn.com/u/liweiwei1419/">liweiwei1419</a> </p>
+</blockquote>
+<span id="more"></span>
+
+<p><strong>二分查找使用前提：有序表顺序存储</strong>，通常是有序数组。</p>
+<h3 id="二分查找算法思想"><a href="#二分查找算法思想" class="headerlink" title="二分查找算法思想"></a><strong>二分查找算法思想</strong></h3><p>在有序顺序表中，取中间元素与目标元素比较：</p>
+<ul>
+<li>若相等，即找到目标元素，算法结束；</li>
+<li>若小于目标元素，则在右半区间继续进行二分查找；</li>
+<li>若大于目标元素，则在左半区间继续进行二分查找。</li>
+</ul>
+<p>重复上述过程，直至找到目标元素，或所有查找区间无目标元素，算法结束。</p>
+<h3 id="二分查找基础问题"><a href="#二分查找基础问题" class="headerlink" title="二分查找基础问题"></a><strong>二分查找基础问题</strong></h3><p><a href="https://leetcode-cn.com/problems/binary-search/">704. 二分查找</a> </p>
+<p>在此问题中，二分查找将待查找数组分为了 3 个部分：mid，mid 左边，mid 右边。</p>
+<p>若 mid 就是待查找元素，直接返回即可；否则根据不等条件，去左半区间或右半区间查找即可。</p>
+<p>二分查找每次都将查找范围减半，因此大大降低了算法的时间复杂度，达到了 O(logn)。</p>
+<p>下面是 <a href="https://leetcode-cn.com/problems/binary-search/">704. 二分查找</a> 的参考代码：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">/**
+     * 二分查找
+     * 时间复杂度：O(logn)
+     * 空间复杂度：O(1)
+     * 
+     * @param nums
+     * @param target
+     * @return
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">search</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums<span class="token punctuation">,</span> <span class="token keyword">int</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> left <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> right <span class="token operator">=</span> nums<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>left <span class="token operator">&lt;=</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">int</span> mid <span class="token operator">=</span> left <span class="token operator">+</span> <span class="token punctuation">(</span>right <span class="token operator">-</span> left<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&lt;</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                left <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">></span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                right <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">return</span> mid<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>此题是最基础的二分查找，代码可作为二分查找的模板使用。</p>
+<p>二分查找代码中最需要注意的地方是 <strong><code>while</code> 循环条件</strong> 和 <strong><code>mid</code> 取值</strong> 的设置。</p>
+<p>mid 赋值语句通常会写成：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">int</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>left <span class="token operator">+</span> right<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>不过这种写法存在隐患。当 left 和 right 都很大时，<code>left + right</code> 可能会发生整型溢出。因此最好写成如下形式：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">int</span> mid <span class="token operator">=</span> left <span class="token operator">+</span> <span class="token punctuation">(</span>right <span class="token operator">-</span> left<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这两种写法其实没有太大区别，因为绝大多数问题中，数组下标都不会取到特别大。</p>
+<p>另外，还可以参考 JDK 源码 java.util.Arrays 二分查找方法中的写法：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">while</span> <span class="token punctuation">(</span>low <span class="token operator">&lt;=</span> high<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>low <span class="token operator">+</span> high<span class="token punctuation">)</span> <span class="token operator">>>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">long</span> midVal <span class="token operator">=</span> a<span class="token punctuation">[</span>mid<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>midVal <span class="token operator">&lt;</span> key<span class="token punctuation">)</span>
+        low <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>midVal <span class="token operator">></span> key<span class="token punctuation">)</span>
+        high <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        <span class="token keyword">return</span> mid<span class="token punctuation">;</span> <span class="token comment">// key found</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>注：&gt;&gt;&gt; 按位右移补零操作符。左操作数的值按右操作数指定的位数右移，移动得到的空位以零填充。</p>
+</blockquote>
+<p><code>int mid = (low + high) &gt;&gt;&gt; 1</code> 在 <code>low + high</code> 发生整型溢出时，高位补0，结果依然正确。</p>
+<h3 id="为什么是-1-2"><a href="#为什么是-1-2" class="headerlink" title="为什么是 1/2"></a><strong>为什么是 1/2</strong></h3><p>为什么是二分查找，而不是三分、四分？</p>
+<p>例如：在取值范围 0~1000000 之间 1000 个元素从小到大均匀分布的数组中查找 5。</p>
+<p>从较小数组下标开始查找显然要比从数组中间开始查找更为快捷。<br>$$<br>mid = left + \frac{1}{2} \left ( right - left \right )<br>$$<br>将上式中的 $1/2$ 进行改进，改进为下面的计算方案：<br>$$<br>mid = left + \frac{target - nums[left]}{nums[right] - nums[left]} \left ( right - left \right )<br>$$<br>这样改进有什么好处呢？</p>
+<p>假设 <code>nums = &#123;0, 1, 16, 24, 35, 47, 59, 62, 73, 88, 99&#125;</code> ，<code>left = 1</code>，<code>right = 10</code>，则 <code>nums[left] = 1, nums[right] = 99</code>。如果目标值 <code>target = 16</code>，二分查找需要 4 次，而采用新的方案：<br>$$<br>mid = 1 + \frac{16 - 1}{99 - 1} \left ( 10 - 1 \right ) = 2.378<br>$$<br>取整 mid = 2，只需要 2 次即可找到目标值。</p>
+<p>其实，这就是另一种有序顺序表的查找算法：插值查找。</p>
+<p>插值查找（Interpolation Search），根据要查找的目标元素 target 与查找表中 nums[left]、nums[right] 比较后的查找算法，其核心就在于插值的计算公式 $\frac{target - nums[left]}{nums[right] - nums[left]}$ 。</p>
+<p>从时间复杂度来讲，插值查找也是 O(logn)。对于表长较大，而元素分布又比较均匀的查找表来说，插值查找的平均性能要优于二分查找。不过<strong>在我们对问题一无所知的时候，取中间数是最好的做法</strong>。</p>
+<hr>
+<p>参考：</p>
+<ol>
+<li><a href="https://leetcode-cn.com/problems/search-insert-position/solution/te-bie-hao-yong-de-er-fen-cha-fa-fa-mo-ban-python-/">用减治思想写二分查找问题、几种模板写法的介绍与比较</a></li>
+<li>《大话数据结构》8.4 有序表查找</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二叉树的遍历</title>
+    <url>/2021/04/26/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/</url>
+    <content><![CDATA[<p>总结一下二叉树常见的遍历方式</p>
+<span id="more"></span>
+
+<p>二叉树节点类</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TreeNode</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> val<span class="token punctuation">;</span>
+    <span class="token class-name">TreeNode</span> left<span class="token punctuation">;</span>
+    <span class="token class-name">TreeNode</span> right<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">TreeNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">TreeNode</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>val <span class="token operator">=</span> val<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">TreeNode</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">,</span> <span class="token class-name">TreeNode</span> left<span class="token punctuation">,</span> <span class="token class-name">TreeNode</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>val <span class="token operator">=</span> val<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>left <span class="token operator">=</span> left<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>right <span class="token operator">=</span> right<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h2><h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><h3 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h3><hr>
+<h2 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h2><h3 id="递归-1"><a href="#递归-1" class="headerlink" title="递归"></a>递归</h3><h3 id="迭代-1"><a href="#迭代-1" class="headerlink" title="迭代"></a>迭代</h3><hr>
+<h2 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h2><h3 id="递归-2"><a href="#递归-2" class="headerlink" title="递归"></a>递归</h3><h3 id="迭代-2"><a href="#迭代-2" class="headerlink" title="迭代"></a>迭代</h3><hr>
+<h2 id="层序遍历"><a href="#层序遍历" class="headerlink" title="层序遍历"></a>层序遍历</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 二叉树的层序遍历
+ * &lt;p>
+ * 时间复杂度：O(N)，N 为节点数
+ * &lt;p>
+ * 空间复杂度：O(N)，N 为节点数
+ */</span>
+<span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token function">levelOrder</span><span class="token punctuation">(</span><span class="token class-name">TreeNode</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span><span class="token punctuation">></span></span> ans <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token class-name">Queue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TreeNode</span><span class="token punctuation">></span></span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>queue<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 获取当前队列长度，即二叉树这一层的节点数</span>
+        <span class="token keyword">int</span> size <span class="token operator">=</span> queue<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 临时存储当前层节点值</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> temp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">TreeNode</span> node <span class="token operator">=</span> queue<span class="token punctuation">.</span><span class="token function">poll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            temp<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>node<span class="token punctuation">.</span>left <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>node<span class="token punctuation">.</span>right <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        ans<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>二叉树</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>测试博客</title>
+    <url>/2020/07/06/%E6%B5%8B%E8%AF%95%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h2 id="一"><a href="#一" class="headerlink" title="一"></a>一</h2><p>这是第一部分</p>
+<h2 id="二"><a href="#二" class="headerlink" title="二"></a>二</h2><p>这是第二部分</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello, world!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+]]></content>
+  </entry>
+  <entry>
     <title>Spring Boot 文件上传</title>
     <url>/2021/01/07/Spring-Boot-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
     <content><![CDATA[<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>Spring Initializr 创建 Spring Boot 项目，模板引擎选择 Thymeleaf。</p>
@@ -453,187 +772,6 @@
       <tags>
         <tag>Spring Boot</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>二分查找</title>
-    <url>/2020/07/17/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</url>
-    <content><![CDATA[<p><img data-src="https://s1.ax1x.com/2020/07/17/Us1nsS.png" alt="二分查找"></p>
-<blockquote>
-<p>注：图源 <a href="https://leetcode-cn.com/u/liweiwei1419/">liweiwei1419</a> </p>
-</blockquote>
-<span id="more"></span>
-
-<p><strong>二分查找使用前提：有序表顺序存储</strong>，通常是有序数组。</p>
-<h3 id="二分查找算法思想"><a href="#二分查找算法思想" class="headerlink" title="二分查找算法思想"></a><strong>二分查找算法思想</strong></h3><p>在有序顺序表中，取中间元素与目标元素比较：</p>
-<ul>
-<li>若相等，即找到目标元素，算法结束；</li>
-<li>若小于目标元素，则在右半区间继续进行二分查找；</li>
-<li>若大于目标元素，则在左半区间继续进行二分查找。</li>
-</ul>
-<p>重复上述过程，直至找到目标元素，或所有查找区间无目标元素，算法结束。</p>
-<h3 id="二分查找基础问题"><a href="#二分查找基础问题" class="headerlink" title="二分查找基础问题"></a><strong>二分查找基础问题</strong></h3><p><a href="https://leetcode-cn.com/problems/binary-search/">704. 二分查找</a> </p>
-<p>在此问题中，二分查找将待查找数组分为了 3 个部分：mid，mid 左边，mid 右边。</p>
-<p>若 mid 就是待查找元素，直接返回即可；否则根据不等条件，去左半区间或右半区间查找即可。</p>
-<p>二分查找每次都将查找范围减半，因此大大降低了算法的时间复杂度，达到了 O(logn)。</p>
-<p>下面是 <a href="https://leetcode-cn.com/problems/binary-search/">704. 二分查找</a> 的参考代码：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">/**
-     * 二分查找
-     * 时间复杂度：O(logn)
-     * 空间复杂度：O(1)
-     * 
-     * @param nums
-     * @param target
-     * @return
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">search</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums<span class="token punctuation">,</span> <span class="token keyword">int</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span> left <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> right <span class="token operator">=</span> nums<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>left <span class="token operator">&lt;=</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">int</span> mid <span class="token operator">=</span> left <span class="token operator">+</span> <span class="token punctuation">(</span>right <span class="token operator">-</span> left<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&lt;</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                left <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">></span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                right <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">return</span> mid<span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>此题是最基础的二分查找，代码可作为二分查找的模板使用。</p>
-<p>二分查找代码中最需要注意的地方是 <strong><code>while</code> 循环条件</strong> 和 <strong><code>mid</code> 取值</strong> 的设置。</p>
-<p>mid 赋值语句通常会写成：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">int</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>left <span class="token operator">+</span> right<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>不过这种写法存在隐患。当 left 和 right 都很大时，<code>left + right</code> 可能会发生整型溢出。因此最好写成如下形式：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">int</span> mid <span class="token operator">=</span> left <span class="token operator">+</span> <span class="token punctuation">(</span>right <span class="token operator">-</span> left<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>这两种写法其实没有太大区别，因为绝大多数问题中，数组下标都不会取到特别大。</p>
-<p>另外，还可以参考 JDK 源码 java.util.Arrays 二分查找方法中的写法：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">while</span> <span class="token punctuation">(</span>low <span class="token operator">&lt;=</span> high<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>low <span class="token operator">+</span> high<span class="token punctuation">)</span> <span class="token operator">>>></span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">long</span> midVal <span class="token operator">=</span> a<span class="token punctuation">[</span>mid<span class="token punctuation">]</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>midVal <span class="token operator">&lt;</span> key<span class="token punctuation">)</span>
-        low <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>midVal <span class="token operator">></span> key<span class="token punctuation">)</span>
-        high <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">else</span>
-        <span class="token keyword">return</span> mid<span class="token punctuation">;</span> <span class="token comment">// key found</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<blockquote>
-<p>注：&gt;&gt;&gt; 按位右移补零操作符。左操作数的值按右操作数指定的位数右移，移动得到的空位以零填充。</p>
-</blockquote>
-<p><code>int mid = (low + high) &gt;&gt;&gt; 1</code> 在 <code>low + high</code> 发生整型溢出时，高位补0，结果依然正确。</p>
-<h3 id="为什么是-1-2"><a href="#为什么是-1-2" class="headerlink" title="为什么是 1/2"></a><strong>为什么是 1/2</strong></h3><p>为什么是二分查找，而不是三分、四分？</p>
-<p>例如：在取值范围 0~1000000 之间 1000 个元素从小到大均匀分布的数组中查找 5。</p>
-<p>从较小数组下标开始查找显然要比从数组中间开始查找更为快捷。<br>$$<br>mid = left + \frac{1}{2} \left ( right - left \right )<br>$$<br>将上式中的 $1/2$ 进行改进，改进为下面的计算方案：<br>$$<br>mid = left + \frac{target - nums[left]}{nums[right] - nums[left]} \left ( right - left \right )<br>$$<br>这样改进有什么好处呢？</p>
-<p>假设 <code>nums = &#123;0, 1, 16, 24, 35, 47, 59, 62, 73, 88, 99&#125;</code> ，<code>left = 1</code>，<code>right = 10</code>，则 <code>nums[left] = 1, nums[right] = 99</code>。如果目标值 <code>target = 16</code>，二分查找需要 4 次，而采用新的方案：<br>$$<br>mid = 1 + \frac{16 - 1}{99 - 1} \left ( 10 - 1 \right ) = 2.378<br>$$<br>取整 mid = 2，只需要 2 次即可找到目标值。</p>
-<p>其实，这就是另一种有序顺序表的查找算法：插值查找。</p>
-<p>插值查找（Interpolation Search），根据要查找的目标元素 target 与查找表中 nums[left]、nums[right] 比较后的查找算法，其核心就在于插值的计算公式 $\frac{target - nums[left]}{nums[right] - nums[left]}$ 。</p>
-<p>从时间复杂度来讲，插值查找也是 O(logn)。对于表长较大，而元素分布又比较均匀的查找表来说，插值查找的平均性能要优于二分查找。不过<strong>在我们对问题一无所知的时候，取中间数是最好的做法</strong>。</p>
-<hr>
-<p>参考：</p>
-<ol>
-<li><a href="https://leetcode-cn.com/problems/search-insert-position/solution/te-bie-hao-yong-de-er-fen-cha-fa-fa-mo-ban-python-/">用减治思想写二分查找问题、几种模板写法的介绍与比较</a></li>
-<li>《大话数据结构》8.4 有序表查找</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>二叉树的遍历</title>
-    <url>/2021/04/26/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/</url>
-    <content><![CDATA[<p>总结一下二叉树常见的遍历方式</p>
-<span id="more"></span>
-
-<p>二叉树节点类</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TreeNode</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> val<span class="token punctuation">;</span>
-    <span class="token class-name">TreeNode</span> left<span class="token punctuation">;</span>
-    <span class="token class-name">TreeNode</span> right<span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token class-name">TreeNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">public</span> <span class="token class-name">TreeNode</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>val <span class="token operator">=</span> val<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">public</span> <span class="token class-name">TreeNode</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">,</span> <span class="token class-name">TreeNode</span> left<span class="token punctuation">,</span> <span class="token class-name">TreeNode</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>val <span class="token operator">=</span> val<span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>left <span class="token operator">=</span> left<span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>right <span class="token operator">=</span> right<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h2><h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><h3 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h3><hr>
-<h2 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h2><h3 id="递归-1"><a href="#递归-1" class="headerlink" title="递归"></a>递归</h3><h3 id="迭代-1"><a href="#迭代-1" class="headerlink" title="迭代"></a>迭代</h3><hr>
-<h2 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h2><h3 id="递归-2"><a href="#递归-2" class="headerlink" title="递归"></a>递归</h3><h3 id="迭代-2"><a href="#迭代-2" class="headerlink" title="迭代"></a>迭代</h3><hr>
-<h2 id="层序遍历"><a href="#层序遍历" class="headerlink" title="层序遍历"></a>层序遍历</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
- * 二叉树的层序遍历
- * &lt;p>
- * 时间复杂度：O(N)，N 为节点数
- * &lt;p>
- * 空间复杂度：O(N)，N 为节点数
- */</span>
-<span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token function">levelOrder</span><span class="token punctuation">(</span><span class="token class-name">TreeNode</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span><span class="token punctuation">></span></span> ans <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token class-name">Queue</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TreeNode</span><span class="token punctuation">></span></span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>queue<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 获取当前队列长度，即二叉树这一层的节点数</span>
-        <span class="token keyword">int</span> size <span class="token operator">=</span> queue<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// 临时存储当前层节点值</span>
-        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> temp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token class-name">TreeNode</span> node <span class="token operator">=</span> queue<span class="token punctuation">.</span><span class="token function">poll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            temp<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>node<span class="token punctuation">.</span>left <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>node<span class="token punctuation">.</span>right <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-        ans<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-]]></content>
-      <tags>
-        <tag>算法</tag>
-        <tag>二叉树</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>测试博客</title>
-    <url>/2020/07/06/%E6%B5%8B%E8%AF%95%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h2 id="一"><a href="#一" class="headerlink" title="一"></a>一</h2><p>这是第一部分</p>
-<h2 id="二"><a href="#二" class="headerlink" title="二"></a>二</h2><p>这是第二部分</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello, world!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-]]></content>
   </entry>
   <entry>
     <title>Spring 5 笔记</title>
