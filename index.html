@@ -193,6 +193,544 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.jnxss.top/2022/09/01/Spring-Boot-%E4%B8%AD%E7%9A%84-AOP-%E6%98%AF%E5%93%AA%E7%A7%8D%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/my-avatar.png">
+      <meta itemprop="name" content="江南笑书生">
+      <meta itemprop="description" content="心怀梦想，永远奋斗">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江南笑书生">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/01/Spring-Boot-%E4%B8%AD%E7%9A%84-AOP-%E6%98%AF%E5%93%AA%E7%A7%8D%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%EF%BC%9F/" class="post-title-link" itemprop="url">Spring Boot 中的 AOP 是哪种代理模式？</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-01 10:51:30" itemprop="dateCreated datePublished" datetime="2022-09-01T10:51:30+08:00">2022-09-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-02 18:30:32" itemprop="dateModified" datetime="2022-11-02T18:30:32+08:00">2022-11-02</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>234</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>sa</p>
+<p>总结：</p>
+<ul>
+<li><p>Spring 中的 AOP，有接口默认就用 JDK 动态代理，没有接口就用 CGLIB 动态代理。</p>
+<p>但可以设置 <code>@EnableAspectJAutoProxy(proxyTargetClass = true)</code> 强制使用 CGLIB。</p>
+</li>
+<li><p>Spring Boot 中的 AOP，<code>2.0</code> 之前与 Spring 一样；<code>2.0</code> 之后默认使用 CGLIB 动态代理，如需使用 JDK 动态代理，需在 <code>application.properties</code> 中配置 <code>spring.aop.proxy-target-class=false</code>。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.jnxss.top/2022/08/10/Knuth-%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/my-avatar.png">
+      <meta itemprop="name" content="江南笑书生">
+      <meta itemprop="description" content="心怀梦想，永远奋斗">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江南笑书生">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/10/Knuth-%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">Knuth 洗牌算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-10 22:54:52 / 修改时间：23:46:57" itemprop="dateCreated datePublished" datetime="2022-08-10T22:54:52+08:00">2022-08-10</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>394</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>有时会遇到这样的题目：<strong>设计一个公平的洗牌算法</strong>。</p>
+<p>与之类似的还有 <strong>随机打乱一个数组</strong>，其中用到的都是「随机算法」。</p>
+<p>这类问题的核心在于“公平”、“随机”。</p>
+<p>什么叫“公平”？</p>
+<p>假设有一个长度为 $n$ 的数组（无重复元素），那么它的排列共有 $n!$ 种。</p>
+<p>要做到公平，就要求<strong>等概率</strong>地返回这 $n!$ 种排列中地其中一种。</p>
+<p>一种朴素的想法就是，生成所有 $n!$ 种排列，然后随机返回其中的一个。</p>
+<p>毫无疑问这种算法是正确的，但是 $O(n!)$ 的时间复杂度是不可接受的，它是比指数爆炸 $2^n$ 还恐怖得多的存在。</p>
+<p>换个角度思考，上面的要求等价于 <strong>每个元素等概率地出现在数组的每个位置</strong>。</p>
+<p>就有了大名鼎鼎的 <strong>Knuth 洗牌算法</strong>，其实只有两行：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> nums.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    swap(nums, i, random.nextInt(i + <span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这两行代码就可以完成上述的目的。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.jnxss.top/2022/07/28/%E3%80%90SpringCloud%E3%80%91feign.codec.EncodeException%20No%20qualifying%20bean%20of%20type/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/my-avatar.png">
+      <meta itemprop="name" content="江南笑书生">
+      <meta itemprop="description" content="心怀梦想，永远奋斗">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江南笑书生">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/28/%E3%80%90SpringCloud%E3%80%91feign.codec.EncodeException%20No%20qualifying%20bean%20of%20type/" class="post-title-link" itemprop="url">【SpringCloud】feign.codec.EncodeException No qualifying bean of type</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-28 20:11:52" itemprop="dateCreated datePublished" datetime="2022-07-28T20:11:52+08:00">2022-07-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-04-22 11:06:15" itemprop="dateModified" datetime="2023-04-22T11:06:15+08:00">2023-04-22</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="错误描述"><a href="#错误描述" class="headerlink" title="错误描述"></a>错误描述</h2><p>在 Spring Cloud 项目中通过 Open Feign 远程调用时出现如下错误：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">feign<span class="selector-class">.codec</span><span class="selector-class">.EncodeException</span>: No qualifying bean of type <span class="string">&#x27;org.springframework.boot.autoconfigure.http.HttpMessageConverters&#x27;</span> available: expected at least <span class="number">1</span> bean which qualifies as autowire candidate. Dependency annotations: &#123;@org<span class="selector-class">.springframework</span><span class="selector-class">.beans</span><span class="selector-class">.factory</span><span class="selector-class">.annotation</span><span class="selector-class">.Autowired</span>(required=true)&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>Spring Cloud 版本：Hoxton.SR9</p>
+<p>Spring Cloud Alibaba 版本：2.2.2.RELEASE</p>
+<p>Spring Boot 版本：2.3.7.RELEASE</p>
+<h2 id="错误原因"><a href="#错误原因" class="headerlink" title="错误原因"></a>错误原因</h2><p>从报错信息中不难看出，错误原因是容器中缺少 <code>HttpMessageConverters</code> 这样一个 bean 对象。</p>
+<p>GitHub 上 <a target="_blank" rel="noopener" href="https://github.com/spring-cloud/spring-cloud-openfeign">spring-cloud&#x2F;spring-cloud-openfeign</a> 与此相关的 issue：<a target="_blank" rel="noopener" href="https://github.com/spring-cloud/spring-cloud-openfeign/issues/235%E3%80%82">https://github.com/spring-cloud/spring-cloud-openfeign/issues/235。</a></p>
+<p>在 spring-boot-autoconfigure 的较新版本中（具体哪个版本我也不知道），<code>HttpMessageConverters</code> 的自动配置条件更改了，可以参见 <code>HttpMessageConvertersAutoConfiguration</code> 类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里省去了其他无关注解</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(&#123;HttpMessageConverter.class&#125;)</span></span><br><span class="line"><span class="meta">@Conditional(&#123;HttpMessageConvertersAutoConfiguration.NotReactiveWebApplicationCondition.class&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HttpMessageConvertersAutoConfiguration</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为现在的 Spring Cloud Gateway 是基于 WebFlux 的，是 Reactive Web。所以根据 <code>@Conditional</code> 的条件，<code>HttpMessageConvertersAutoConfiguration</code> 就不会生效，进而也不会进行自动配置，就导致容器中缺少 <code>HttpMessageConverters</code> 对象。</p>
+<p><img src="http://cdn.jnxss.top/Snipaste_2023-02-28_19-42-44.png"></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>这个问题解决方法也很简单，只需自己写一个配置类，向容器中注册一个 <code>HttpMessageConverters</code> 对象即可。方法可以从 <code>HttpMessageConvertersAutoConfiguration</code> 中复制。参考如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FeignConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean</span></span><br><span class="line">    <span class="keyword">public</span> HttpMessageConverters <span class="title function_">messageConverters</span><span class="params">(ObjectProvider&lt;HttpMessageConverter&lt;?&gt;&gt; converters)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">HttpMessageConverters</span>(converters.orderedStream().collect(Collectors.toList()));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重启项目，问题解决。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.jnxss.top/2022/06/09/RabbitMQ%E6%8A%A5%E9%94%99%EF%BC%9AFailed-to-declare-queue-s/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/my-avatar.png">
+      <meta itemprop="name" content="江南笑书生">
+      <meta itemprop="description" content="心怀梦想，永远奋斗">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江南笑书生">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/09/RabbitMQ%E6%8A%A5%E9%94%99%EF%BC%9AFailed-to-declare-queue-s/" class="post-title-link" itemprop="url">RabbitMQ报错：Failed to declare queue(s)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-09 20:57:49" itemprop="dateCreated datePublished" datetime="2022-06-09T20:57:49+08:00">2022-06-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-04-22 11:06:36" itemprop="dateModified" datetime="2023-04-22T11:06:36+08:00">2023-04-22</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>629</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="错误描述及原因"><a href="#错误描述及原因" class="headerlink" title="错误描述及原因"></a>错误描述及原因</h2><p>项目启动时 RabbitMQ 报错了，控制台打印一大堆就不贴了，问题的源头是：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed <span class="keyword">to</span> declare <span class="built_in">queue</span>(s):<span class="meta">[</span>你的消息队列名<span class="meta">]</span></span><br></pre></td></tr></table></figure>
+
+<p>也就是说声明队列失败了。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/09/RabbitMQ%E6%8A%A5%E9%94%99%EF%BC%9AFailed-to-declare-queue-s/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.jnxss.top/2022/05/07/%E9%83%AD%E7%BB%A7%E6%89%BF%E8%AE%B2%E5%9B%BD%E8%BF%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/my-avatar.png">
+      <meta itemprop="name" content="江南笑书生">
+      <meta itemprop="description" content="心怀梦想，永远奋斗">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江南笑书生">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/07/%E9%83%AD%E7%BB%A7%E6%89%BF%E8%AE%B2%E5%9B%BD%E8%BF%90/" class="post-title-link" itemprop="url">郭继承讲国运</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-07 18:13:36" itemprop="dateCreated datePublished" datetime="2022-05-07T18:13:36+08:00">2022-05-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-08 13:29:47" itemprop="dateModified" datetime="2022-05-08T13:29:47+08:00">2022-05-08</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>声明：</strong>本系列文稿整理自抖音 <a target="_blank" rel="noopener" href="https://www.douyin.com/user/MS4wLjABAAAASItWatcvP39u6tmsaEelgHny-HfqV50Pcg2mmtwk0Ck">@吾纪录</a> 发布的中国政法大学马克思主义学院郭继承教授的系列视频，对口头讲述内容进行了书面整理，并不是逐字对应，但保证没有篡改原意。<strong>仅供学习，如觉有不妥，请联系删除</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/5ME/ygq-images@master/blog-image/%E5%9B%BD%E8%BF%90%E7%BA%BF.png" alt="国运线"></p>
+<p>&amp;emsp;&amp;emsp;在人类三四千年的历史长河中，中国绝大多数的时间都在人类文明的第一梯队。大汉时期，那有拓疆万里的雄心；盛唐的时候，那有融汇天下为我所用的气派。同时代的欧洲，它的文明程度、社会治理，方方面面中国走在前面。这是事实，没有什么好抬杠的。盛唐女孩的衣服，胸下围一道绳子束着，下面敞开没有束缚。我吃多少，多么健硕，什么腰粗不粗，你管得着吗？“人面不知何处去，桃花依旧笑春风”。同时代的欧洲和中国比，在欧洲你笑春风一次？你的后果很严重。在欧洲所有的说法只要跟它的宗教不一致、跟教皇说的不一致，烤死，布鲁诺只是其中之一。还有的喝水把肚子喝得很大，然后用石头猛撞肚子。各种处罚人，称之为“黑暗的中世纪”。所以欧洲的文明程度没有中国高，中国历史两千多年没有出现神权压抑人权。中国历史上有王权对人性的压抑，但神权控制人，严格意义上没有出现。</p>
+<p>大家读唐诗的时候，都是那个时代人的精神风貌。李白写诗：“君不见黄河之水天上来，奔流到海不复回”。离别的时候一般人都伤感，可是在大唐气象里面，离别的时候都可以拍手唱歌，“李白乘舟将欲行，忽闻岸上踏歌声，桃花潭水深千尺，不及汪伦送我情。”，“海内存知己，天涯若比邻”。王维的诗：“九天阊阖开宫殿，万国衣冠拜冕旒”，那是唐朝气象。</p>
+<p>到了宋代的时候，中国整个气象的开阔仍然有。李清照的词你们都读过吧，那种心情的舒展。“常记溪亭日暮，沉醉不知归路。兴尽晚回舟，误入藕花深处。争渡，争渡，惊起一滩鸥鹭。”少男少女在一起喝酒啊、划拳行令啊，兴尽晚回舟，乘舟的时候还要比看谁快，争渡争渡。那个时候也没有那么多约束，要男孩女孩授受不亲啦，乱了风俗？没有这种说法吧，而且很高兴还写诗。</p>
+<p>可是朋友们，后来中国的生命力就开始萎缩。到了宋代以后，贞节牌坊开始出现了。这个贞节牌坊，我是这样看待的，比如有的女同志她的丈夫去世了，这个女同事觉得哎呀我也不想再嫁了，那么这种人有个贞节牌坊，我不想再嫁了，行不行？当然行了，人家的自由嘛。而有的女同志丈夫去世以后自己生活不方便，还想再嫁，可以不可以？当然可以了，这怎么了。可是那个时候就不行，沉重的枷锁就束缚了。衣服从盛唐时期那个状态往上收了，到了明朝的时候变成领子剩一点小口。到了清朝的时候，没了，什么都看不到。衣服表现了一个民族在走向封闭、走向僵化、走向保守。在明朝中后期以后，海禁；清朝以后，文字狱。</p>
+<p>同时代的欧洲和中国比，比我们怎样呢？中国的国运，我们从南宋的节点就开始往下走了，思想被束缚了，活力被束缚了，就衰败了。但是人家欧洲，从十三世纪、十四世纪一步一步地在冲破两个枷锁，一个是神权一个是王权。有个人叫但丁，但丁写神曲的时候，你们有没有发现他在地狱里边给谁留了个位置？教皇。敢在地狱里给教皇留位置，掀开了向神权进行清算的西方文艺复兴的序幕。有一个画家叫达芬奇画了个谁？蒙娜丽莎。有人说蒙娜丽莎的微笑多么漂亮，我说你的审美很宽容。蒙娜丽莎的微笑不是它美，是它在思想史和哲学史上的地位。原来的画，只能画圣母、天使。而达芬奇把一个家庭妇女当做绘画的主题，说明西方的思想和画家的笔端开始从遥远的天国拉向了人间，这是它的意义。梵高的向日葵，挣扎、扭曲，向日葵为什么这样？向日葵什么样都不重要，这是梵高心中的向日葵。梵高这么画，说明人苏醒了。西方人开始挣破神权的束缚，开始把人的尊严和自由给呼喊出来。这就是文艺复兴。</p>
+<p>文艺复兴、启蒙运动、宗教改革，三个合在一起，思想的缺口打开了；法国大革命、光荣革命、美国独立战争，政治制度打开了；工业革命，科技的创造打开了；亚当·斯密的《国富论》，市场经济打开了。</p>
+<p>哎呀同学们，两三千年不如我们的欧美，野蛮增长。为什么说野蛮增长呢？马克思对它的评价就是：资产阶级来到世间的一百年创造的财富，比以往历史所有总和都多。西方资本主义社会来到人间，创造那么多财富，可是它带给我们人类太多的血腥，中国就是受害者。帝国主义对我们民族的灾难和罪恶，罄竹难书。</p>
+<p>中华民族到了十七世纪，其实也开始突破了。黄宗羲有没有反思两三千年中国存在的专制制度？顾炎武反思了没有？王夫之反思了没有？方以智都在反思。历史都在这个突破口。只可惜十七世纪发生一件什么事？清军入关。李自成被灭了以后，1644 年顺治皇帝在北京称帝。哎呀同学们，这一次中国的历史在即将突破的时候，一个比中原地区的文明和治理程度远远落后的游牧部落占领中国了。这就是历史，没法改。那么清朝它占领中国以后，它没有接着明朝、接着黄宗羲王夫之往前走，没有对以前两千多年制度进行清算、创造一个新的文明体系。没有，反而回去了，更加比旧制度还要封闭。这一下不要紧，中西方的差距一下子拉开了。我们踽踽独行，被时代远远抛开了。当然了，瘦死的骆驼比马大，毕竟两三千年的沉淀。太阳将要落山的时候，也有一抹彩霞，映得满天通红。那一抹彩霞真的很艳丽啊，康乾盛世。可是朋友们，晚霞消失以后，是我们这个民族无尽的黑暗，同胞的挣扎和血泪。</p>
+<p>那么这个时候，一旦跟西方交手，真的是溃不成军。为什么？</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.jnxss.top/2022/05/04/%E6%96%B0%E5%8D%8E%E7%A4%BE%E5%BC%A0%E6%89%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/my-avatar.png">
+      <meta itemprop="name" content="江南笑书生">
+      <meta itemprop="description" content="心怀梦想，永远奋斗">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江南笑书生">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/04/%E6%96%B0%E5%8D%8E%E7%A4%BE%E5%BC%A0%E6%89%AC/" class="post-title-link" itemprop="url">年轻时写日记要藏好，不然就被出版了</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-04 10:46:58" itemprop="dateCreated datePublished" datetime="2022-05-04T10:46:58+08:00">2022-05-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-07 12:50:35" itemprop="dateModified" datetime="2022-07-07T12:50:35+08:00">2022-07-07</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>声明：</strong>本文是新华社记者张扬 <a target="_blank" rel="noopener" href="https://space.bilibili.com/633264591">@小羊在鲜花舍</a> 在五四青年节之际发布的一条视频 【<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1na411a7nK">年轻时写日记要藏好，不然就被出版了</a>】 的文字版。我觉得写得很好，既可以平常当作小文章读读，也可以在写作时参考借鉴。<strong>仅供学习使用，如觉有不妥，可联系删除</strong>。</p>
+<blockquote>
+<p>一日晴…… 晚子英来，招之至广和居饮。</p>
+<p>二十六日…… 归途过临记洋行买饼饵少许。</p>
+<p>三日…… 过稻香村买饼干一元。</p>
+<p>——《鲁迅日记》</p>
+</blockquote>
+<p>&emsp;&emsp;如果你可以穿越百年，和那时的青年对话，你会聊些什么呢？是聊诗词歌赋，还是谈谈人生哲学？其实，和他们的共同语言，比想象中要多得多。<p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/04/%E6%96%B0%E5%8D%8E%E7%A4%BE%E5%BC%A0%E6%89%AC/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.jnxss.top/2022/03/23/Swagger%E6%8A%A5%E9%94%99%EF%BC%9AIllegal-DefaultValue-null-for-parameter-type-number/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -560,514 +1098,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.jnxss.top/2021/05/07/Spring-AOP-(1)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/my-avatar.png">
-      <meta itemprop="name" content="江南笑书生">
-      <meta itemprop="description" content="心怀梦想，永远奋斗">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="江南笑书生">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/07/Spring-AOP-(1)/" class="post-title-link" itemprop="url">Spring AOP (1)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-07 09:58:32" itemprop="dateCreated datePublished" datetime="2021-05-07T09:58:32+08:00">2021-05-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-09 20:45:10" itemprop="dateModified" datetime="2021-05-09T20:45:10+08:00">2021-05-09</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote><p>在软件开发中，散布于应用中多处的功能被称为<strong>横切关注点</strong>（crosscutting concern）。通常来讲，这些横切关注点从概念上是与应用的业务逻辑相分离的（但是往往会直接嵌入到应用的业务逻辑之中）。把这些横切关注点与业务逻辑相分离正是<strong>面向切面编程</strong>（AOP）所要解决的问题。</p>
-<footer><strong>Craig Walls</strong><cite>Spring 实战（第4版）</cite></footer></blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/07/Spring-AOP-(1)/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.jnxss.top/2021/04/26/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/my-avatar.png">
-      <meta itemprop="name" content="江南笑书生">
-      <meta itemprop="description" content="心怀梦想，永远奋斗">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="江南笑书生">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/26/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/" class="post-title-link" itemprop="url">二叉树的遍历</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-26 10:47:48" itemprop="dateCreated datePublished" datetime="2021-04-26T10:47:48+08:00">2021-04-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-06 20:58:02" itemprop="dateModified" datetime="2021-09-06T20:58:02+08:00">2021-09-06</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>总结一下二叉树常见的遍历方式</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/04/26/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.jnxss.top/2021/01/28/Spring-5-%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/my-avatar.png">
-      <meta itemprop="name" content="江南笑书生">
-      <meta itemprop="description" content="心怀梦想，永远奋斗">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="江南笑书生">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/28/Spring-5-%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Spring 5 笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-01-28 16:33:57" itemprop="dateCreated datePublished" datetime="2021-01-28T16:33:57+08:00">2021-01-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-05 14:19:08" itemprop="dateModified" datetime="2021-05-05T14:19:08+08:00">2021-05-05</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>45k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>41 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="课程内容介绍"><a href="#课程内容介绍" class="headerlink" title="课程内容介绍"></a>课程内容介绍</h1><p>视频地址：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Vf4y127N5">https://www.bilibili.com/video/BV1Vf4y127N5</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/28/Spring-5-%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.jnxss.top/2021/01/10/Spring-Boot-%E6%95%B4%E5%90%88-MyBatis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/my-avatar.png">
-      <meta itemprop="name" content="江南笑书生">
-      <meta itemprop="description" content="心怀梦想，永远奋斗">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="江南笑书生">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/10/Spring-Boot-%E6%95%B4%E5%90%88-MyBatis/" class="post-title-link" itemprop="url">Spring Boot 整合 MyBatis</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-01-10 20:22:05 / 修改时间：22:38:26" itemprop="dateCreated datePublished" datetime="2021-01-10T20:22:05+08:00">2021-01-10</time>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>6.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="创建-Spring-Boot-项目"><a href="#创建-Spring-Boot-项目" class="headerlink" title="创建 Spring Boot 项目"></a>创建 Spring Boot 项目</h2><p>利用 IDEA 内置的 Spring Initializr 创建项目，根据需要选择相应的模块，这里已经内置了 <code>MyBatis Framework</code> 选项。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/10/Spring-Boot-%E6%95%B4%E5%90%88-MyBatis/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.jnxss.top/2021/01/07/Spring-Boot-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/my-avatar.png">
-      <meta itemprop="name" content="江南笑书生">
-      <meta itemprop="description" content="心怀梦想，永远奋斗">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="江南笑书生">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/07/Spring-Boot-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" class="post-title-link" itemprop="url">Spring Boot 文件上传</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-01-07 18:55:38 / 修改时间：21:33:12" itemprop="dateCreated datePublished" datetime="2021-01-07T18:55:38+08:00">2021-01-07</time>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>Spring Initializr 创建 Spring Boot 项目，模板引擎选择 Thymeleaf。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/07/Spring-Boot-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.jnxss.top/2020/07/17/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/my-avatar.png">
-      <meta itemprop="name" content="江南笑书生">
-      <meta itemprop="description" content="心怀梦想，永远奋斗">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="江南笑书生">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/17/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" class="post-title-link" itemprop="url">二分查找</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-17 10:08:22" itemprop="dateCreated datePublished" datetime="2020-07-17T10:08:22+08:00">2020-07-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-06 21:12:31" itemprop="dateModified" datetime="2021-09-06T21:12:31+08:00">2021-09-06</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://s1.ax1x.com/2020/07/17/Us1nsS.png" alt="二分查找"></p>
-<blockquote>
-<p>注：图源 <a target="_blank" rel="noopener" href="https://leetcode-cn.com/u/liweiwei1419/">liweiwei1419</a> </p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/07/17/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1139,14 +1169,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1197,7 +1227,7 @@
 <div class="copyright">
   
   &copy; 2020 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heartbeat"></i>
   </span>
@@ -1206,12 +1236,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">77k</span>
+    <span title="站点总字数">84k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:10</span>
+    <span title="站点阅读时长">1:16</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
@@ -1355,61 +1385,6 @@ window.addEventListener('pjax:success', () => {
   
 
   
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-          load: ['[tex]/mhchem'],
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-          packages: {'[+]': ['mhchem']},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
 
   
 
